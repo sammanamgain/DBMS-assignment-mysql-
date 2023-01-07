@@ -114,6 +114,43 @@ where
 'first bank corporation' and works.salary>10000 ;
  
 
+-- 2d subqueries
+select employee_name
+from
+employee
+where
+employee.city in 
+(
+select city
+from 
+company
+where 
+company.company_name in 
+(select company_name
+from
+works
+where
+works.employee_name=employee.employee_name
+));
+
+-- 2d join
+
+select employee.employee_name
+from
+employee
+natural join 
+works
+natural join
+company
+;
+
+
+-- 2 e regular
+select employee
+from
+
+
+
 
 -- 2f queries
 select employee_name 
@@ -171,7 +208,7 @@ select company_name
 from 
 company
 where
-company_name=
+city=
 (
 select  city
 from 
@@ -179,5 +216,17 @@ company
 where
 company_name='first bank corporation'
 );
+
+-- 2h join
+
+select company_name
+from 
+company
+natural join
+works
+where
+company.city=
+
+
 
 
