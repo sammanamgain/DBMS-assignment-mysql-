@@ -225,8 +225,106 @@ company
 natural join
 works
 where
-company.city=
+city = 
+(select
+city
+from 
+company
+where
+company.company_name='first bank company');
 
 
 
+ -- 2i
+ select employee_name
+ from 
+ works
+ where
+ salary > (
+ select
+ AVG(salary)
+ from
+ works);
+ 
+ 
+ -- 2j
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+-- 3 prerequ
+
+Insert into employee
+values('jones','okfse','los angolos');
+
+
+Insert into manages
+values('jones','hariram pandit');
+
+Insert into works
+values('jones','first bank corporation',90000);
+
+
+-- 3a
+update 
+employee
+set 
+city='newtown'
+where
+employee_name='jones';
+
+
+
+-- 3b
+update 
+works
+set 
+salary = salary *1.1
+where
+company_name='first bank corporation';
+
+
+-- 3c
+ update 
+works
+set 
+salary = salary *1.1
+where
+employee_name in (
+select manager_name
+from
+manages);
+
+
+
+-- 3d
+
+
+
+
+
+
+
+
+
+
+-- 3e
+DELETE 
+FROM
+ works
+ WHERE company_name='first bank corporation';
 
