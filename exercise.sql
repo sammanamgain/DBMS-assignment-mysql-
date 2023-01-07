@@ -56,13 +56,19 @@ values('samman amgain','first bank corporation',8000),
 
 
 
--- 1
+-- 2a queries
 select employee_name 
 from 
 works
 where (company_name='first bank corporation');
 
--- 2b
+-- 2ajoin
+select employee_name 
+from 
+employee natural join works
+where (company_name='first bank corporation');
+
+-- 2b queries
 select employee.employee_name ,employee.city
 from
 employee
@@ -73,8 +79,17 @@ where
 'first bank corporation' )
  );
 
+-- 2b join
+select employee.employee_name ,employee.city
+from
+employee natural join works
 
--- 2c
+ where works.company_name =
+'first bank corporation' ;
+ 
+
+
+-- 2c  queries
 
 
 select employee.employee_name ,employee.city
@@ -87,15 +102,47 @@ where
 'first bank corporation' and works.salary>10000 ) 
  );
 
+
+-- 2c join
+select employee.employee_name ,employee.city,employee.street
+from
+employee
+natural join
+works
+where
+ works.company_name  =
+'first bank corporation' and works.salary>10000 ;
+ 
+
+
+-- 2f queries
 select employee_name 
 from 
 works
 where (company_name!='first bank corporation');
 
 
+-- 2f join
+select employee_name 
+from 
+employee
+natural join
+works
+where (company_name!='first bank corporation');
 
 
+select * from works;
 
+-- 2g subqueries
+select employee_name
+from 
+works
+where
+salary >( select max(salary) from works
+where
+company_name='first bank corporation')
+;
+-- OR
 select wrk.employee_name
 from
 works as wrk
@@ -104,3 +151,33 @@ from
 works
 where                         
 works.company_name = 'first bank corporation' );
+
+
+-- 2G JOIN
+select employee_name
+from 
+employee
+natural join
+works
+where
+salary >( select max(salary) from works
+where
+company_name='first bank corporation')
+;
+
+
+-- 2h subqueries
+select company_name
+from 
+company
+where
+company_name=
+(
+select  city
+from 
+company
+where
+company_name='first bank corporation'
+);
+
+
