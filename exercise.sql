@@ -146,8 +146,10 @@ company
 
 
 -- 2 e regular
-select employee
-from
+  SELECT * FROM employee tbl_e1
+        INNER JOIN manages tbl_m1 ON tbl_e1.employee_name = tbl_m1.employee_name
+        INNER JOIN employee tbl_e2 ON tbl_e2.employee_name = tbl_m1.manager_name
+        WHERE tbl_e1.street = tbl_e2.street AND tbl_e1.city = tbl_e2.city ;
 
 
 
@@ -248,21 +250,35 @@ company.company_name='first bank company');
  
  
  -- 2j
- 
+ (SELECT  company_name FROM works
+    GROUP BY company_name
+    ORDER BY COUNT(company_name) DESC)
+    LIMIT 1;
+
+
+-- 2k
+
+
+ SELECT company_name FROM works
+     GROUP BY company_name
+     ORDER BY AVG(salary) ASC
+     LIMIT 1;
 
 
 
 
 
+-- 2l
+	SELECT company_name FROM 
+    ( SELECT works.company_name, AVG(works.salary) as company_avg_salary FROM works 
+    GROUP BY company_name
+    ORDER BY AVG(works.salary) ASC)  AS tbl_der_avg_salary
+    WHERE company_avg_salary <
+    (SELECT AVG(salary) FROM works WHERE works.company_name = "First Bank Corporation")
 
 
 
-
-
-
-
-
-
+;
 
 
 
@@ -313,7 +329,13 @@ manages);
 
 -- 3d
 
-
+UPDATE works w
+	SET salary = 
+		CASE 
+			WHEN salary * 1.1 <= 100000 THEN salary * 1.1
+			ELSE salary * 1.03
+		END
+	WHERE employee_name IN (SELECT manager_name FROM manages);
 
 
 
